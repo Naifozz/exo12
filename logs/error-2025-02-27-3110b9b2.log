@@ -1,0 +1,7 @@
+=== ERROR LOG [3110b9b2] ===
+Timestamp: 2025-02-27T14:25:22.715Z
+Message: ArticleService.createArticle is not a function
+Stack: TypeError: ArticleService.createArticle is not a function
+    at handleArticleRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/articles.js:25:42)
+    at Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:59:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

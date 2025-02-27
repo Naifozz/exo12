@@ -1,0 +1,11 @@
+=== ERROR LOG [2b634366] ===
+Timestamp: 2025-02-27T12:24:22.315Z
+Message: processItem is not defined
+Stack: ReferenceError: processItem is not defined
+    at ArticleService.getArticle (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/articleService.js:8:9)
+    at async handleArticleRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/articles.js:11:33)
+    at async Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:59:13)
+
+=== REQUEST INFO ===
+Method: GET
+URL: /articles/1

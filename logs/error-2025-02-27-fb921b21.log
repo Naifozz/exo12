@@ -1,0 +1,10 @@
+=== ERROR LOG [fb921b21] ===
+Timestamp: 2025-02-27T12:26:00.367Z
+Message: res.json is not a function
+Stack: TypeError: res.json is not a function
+    at handleArticleRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/articles.js:12:21)
+    at async Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:59:13)
+
+=== REQUEST INFO ===
+Method: GET
+URL: /articles/1

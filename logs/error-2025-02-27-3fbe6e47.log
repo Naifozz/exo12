@@ -1,0 +1,12 @@
+=== ERROR LOG [3fbe6e47] ===
+Timestamp: 2025-02-27T12:26:41.828Z
+Message: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Object
+Stack: TypeError [ERR_INVALID_ARG_TYPE]: The "chunk" argument must be of type string or an instance of Buffer or Uint8Array. Received an instance of Object
+    at write_ (node:_http_outgoing:949:11)
+    at ServerResponse.end (node:_http_outgoing:1106:5)
+    at handleArticleRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/articles.js:12:21)
+    at async Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:59:13)
+
+=== REQUEST INFO ===
+Method: GET
+URL: /articles/1
