@@ -1,5 +1,3 @@
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
 import { ArticleRepository } from "../repositories/articleRepository.js";
 
 export class ArticleService {

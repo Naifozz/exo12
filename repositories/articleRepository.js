@@ -1,4 +1,5 @@
 import { openDb } from "../utils/db.js";
+
 export class ArticleRepository {
     static async findById(id) {
         const db = await openDb();

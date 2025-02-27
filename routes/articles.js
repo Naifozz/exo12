@@ -1,4 +1,3 @@
-import { openDb } from "../utils/db.js";
 import { logError } from "../utils/logger.js";
 import { ArticleService } from "../services/articleService.js";
 
