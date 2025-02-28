@@ -1,6 +1,11 @@
 import { UserRepository } from "../repositories/userRepository.js";
+
 export class Validator {
-    static async articleValidation(article) {
+    constructor() {
+        this.userRepository = new UserRepository();
+    }
+
+    async articleValidation(article) {
         const errors = [];
         if (!article.title || article.title.length < 3) {
             errors.push("Title must be at least 3 characters");
@@ -13,7 +18,8 @@ export class Validator {
         }
         return errors.length > 0 ? errors : null;
     }
-    static async userValidation(user) {
+
+    async userValidation(user) {
         const errors = [];
         if (!user.name || user.name.length < 3) {
             errors.push("Name must be at least 3 characters");
@@ -25,9 +31,9 @@ export class Validator {
         if (!emailRegex.test(user.email)) {
             errors.push("Invalid email format");
         }
-        const existingUser = await UserRepository.existingUser(user.email);
-        console.log(existingUser);
 
+        // Vérification de l'existence de l'utilisateur par email
+        const existingUser = await this.userRepository.existingUser(user.email);
         if (existingUser !== undefined) {
             errors.push("Email already exists");
         }

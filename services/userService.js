@@ -2,44 +2,54 @@ import { UserRepository } from "../repositories/userRepository.js";
 import { Validator } from "../utils/validator.js";
 
 export class UserService {
-    static async getUser(id) {
-        const user = await UserRepository.findById(id);
+    constructor() {
+        this.userRepository = new UserRepository();
+        this.validator = new Validator();
+    }
+
+    async getUser(id) {
+        const user = await this.userRepository.findById(id);
         return user;
     }
-    static async getAllUsers() {
-        const user = await UserRepository.getAll();
-        return user;
+
+    async getAllUsers() {
+        const users = await this.userRepository.getAll();
+        return users;
     }
-    static async createUser(userData) {
-        const validation = await Validator.userValidation(userData);
+
+    async createUser(userData) {
+        const validation = await this.validator.userValidation(userData);
         if (validation !== null) {
             return {
                 success: false,
                 error: validation,
             };
         } else {
-            const user = await UserRepository.createUser(userData);
+            const user = await this.userRepository.createUser(userData);
             return { success: true, data: user };
         }
     }
-    static async updateUser(id, userData) {
-        const validation = await Validator.userValidation(userData);
+
+    async updateUser(id, userData) {
+        const validation = await this.validator.userValidation(userData);
         if (validation !== null) {
             return {
                 success: false,
                 error: validation,
             };
         } else {
-            const user = await UserRepository.updateUser(id, articleData);
+            const user = await this.userRepository.updateUser(id, userData);
             return { success: true, data: user };
         }
     }
-    static async deleteUser(id) {
-        const user = await UserRepository.deleteUser(id);
+
+    async deleteUser(id) {
+        const user = await this.userRepository.deleteUser(id);
         return user;
     }
-    static async getUserArticles(id) {
-        const userArticles = await UserRepository.getUserArticles(id);
+
+    async getUserArticles(id) {
+        const userArticles = await this.userRepository.getUserArticles(id);
         return userArticles;
     }
 }

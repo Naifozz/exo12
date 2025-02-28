@@ -1,0 +1,8 @@
+=== ERROR LOG [ec6222e0] ===
+Timestamp: 2025-02-28T13:18:17.780Z
+Message: this.validator.userValidation is not a function
+Stack: TypeError: this.validator.userValidation is not a function
+    at UserService.createUser (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/userService.js:21:49)
+    at handleUsersRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/users.js:33:54)
+    at Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:61:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

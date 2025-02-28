@@ -2,40 +2,49 @@ import { ArticleRepository } from "../repositories/articleRepository.js";
 import { Validator } from "../utils/validator.js";
 
 export class ArticleService {
-    static async getArticle(id) {
-        const article = await ArticleRepository.findById(id);
+    constructor() {
+        this.articleRepository = new ArticleRepository();
+        this.validator = new Validator();
+    }
+
+    async getArticle(id) {
+        const article = await this.articleRepository.findById(id);
         return article;
     }
-    static async getAll() {
-        const articles = await ArticleRepository.getArticles();
+
+    async getAll() {
+        const articles = await this.articleRepository.getArticles();
         return articles;
     }
-    static async createArticle(articleData) {
-        const validation = await Validator.articleValidation(articleData);
+
+    async createArticle(articleData) {
+        const validation = await this.validator.articleValidation(articleData);
         if (validation !== null) {
             return {
                 success: false,
                 error: validation,
             };
         } else {
-            const article = await ArticleRepository.createArticle(articleData);
+            const article = await this.articleRepository.createArticle(articleData);
             return { success: true, data: article };
         }
     }
-    static async updateArticle(id, articleData) {
-        const validation = await Validator.articleValidation(articleData);
+
+    async updateArticle(id, articleData) {
+        const validation = await this.validator.articleValidation(articleData);
         if (validation !== null) {
             return {
                 success: false,
                 error: validation,
             };
         } else {
-            const article = await ArticleRepository.updateArticle(id, articleData);
+            const article = await this.articleRepository.updateArticle(id, articleData);
             return { success: true, data: article };
         }
     }
-    static async deleteArticle(id) {
-        const article = await ArticleRepository.deleteArticle(id);
+
+    async deleteArticle(id) {
+        const article = await this.articleRepository.deleteArticle(id);
         return article;
     }
 }

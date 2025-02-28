@@ -2,21 +2,23 @@ import { logError } from "../utils/logger.js";
 import { UserService } from "../services/userService.js";
 
 export async function handleUsersRequest(req, res) {
+    const userService = new UserService();
+
     switch (req.method) {
         case "GET":
             if (req.url === "/users") {
-                const users = await UserService.getAllUsers();
+                const users = await userService.getAllUsers();
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(users));
             } else if (req.url.match(/^\/users\/\d+\/articles(\?.*)?$/)) {
                 const id = req.url.split("/")[2];
-                const userArticles = await UserService.getUserArticles(id);
+                const userArticles = await userService.getUserArticles(id);
 
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(userArticles));
             } else if (req.url.startsWith("/users/")) {
                 const id = req.url.split("/")[2];
-                const user = await UserService.getUser(id);
+                const user = await userService.getUser(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(user));
             } else {
@@ -28,7 +30,7 @@ export async function handleUsersRequest(req, res) {
             if (req.url === "/users") {
                 try {
                     const userData = req.body;
-                    const result = await UserService.createUser(userData);
+                    const result = await userService.createUser(userData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -56,7 +58,7 @@ export async function handleUsersRequest(req, res) {
                 try {
                     const id = req.url.split("/")[2];
                     const userData = req.body;
-                    const result = await UserService.updateUser(id, userData);
+                    const result = await userService.updateUser(id, userData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -82,7 +84,7 @@ export async function handleUsersRequest(req, res) {
         case "DELETE":
             if (req.url.startsWith("/users/")) {
                 const id = req.url.split("/")[2];
-                const deletedUser = await UserService.deleteUser(id);
+                const deletedUser = await userService.deleteUser(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(
                     JSON.stringify({

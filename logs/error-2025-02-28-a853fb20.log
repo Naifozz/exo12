@@ -1,0 +1,9 @@
+=== ERROR LOG [a853fb20] ===
+Timestamp: 2025-02-28T13:23:32.288Z
+Message: UserRepository.existingUser is not a function
+Stack: TypeError: UserRepository.existingUser is not a function
+    at Validator.userValidation (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/utils/validator.js:30:51)
+    at UserService.createUser (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/userService.js:21:49)
+    at handleUsersRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/users.js:33:54)
+    at Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:61:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

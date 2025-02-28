@@ -2,15 +2,17 @@ import { logError } from "../utils/logger.js";
 import { ArticleService } from "../services/articleService.js";
 
 export async function handleArticleRequest(req, res) {
+    const articleService = new ArticleService();
+
     switch (req.method) {
         case "GET":
             if (req.url === "/articles") {
-                const articles = await ArticleService.getAllArticles();
+                const articles = await articleService.getAll();
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(articles));
             } else if (req.url.startsWith("/articles/")) {
                 const id = req.url.split("/")[2];
-                const article = await ArticleService.getArticle(id);
+                const article = await articleService.getArticle(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(article));
             } else {
@@ -22,7 +24,7 @@ export async function handleArticleRequest(req, res) {
             if (req.url === "/articles") {
                 try {
                     const articleData = req.body;
-                    const result = await ArticleService.createArticle(articleData);
+                    const result = await articleService.createArticle(articleData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -50,7 +52,7 @@ export async function handleArticleRequest(req, res) {
                 try {
                     const id = req.url.split("/")[2];
                     const articleData = req.body;
-                    const result = await ArticleService.updateArticle(id, articleData);
+                    const result = await articleService.updateArticle(id, articleData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -76,7 +78,7 @@ export async function handleArticleRequest(req, res) {
         case "DELETE":
             if (req.url.startsWith("/articles/")) {
                 const id = req.url.split("/")[2];
-                const deletedArticle = await ArticleService.deleteArticle(id);
+                const deletedArticle = await articleService.deleteArticle(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(
                     JSON.stringify({
