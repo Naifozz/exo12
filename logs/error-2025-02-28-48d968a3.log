@@ -1,0 +1,9 @@
+=== ERROR LOG [48d968a3] ===
+Timestamp: 2025-02-28T10:28:42.411Z
+Message: Cannot read properties of undefined (reading 'length')
+Stack: TypeError: Cannot read properties of undefined (reading 'length')
+    at Validator.userValidation (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/utils/validator.js:29:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UserService.createUser (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/userService.js:14:28)
+    at async handleUsersRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/users.js:31:36)
+    at async Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:61:13)

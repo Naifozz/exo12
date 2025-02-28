@@ -1,0 +1,8 @@
+=== ERROR LOG [31a8e440] ===
+Timestamp: 2025-02-28T09:10:10.378Z
+Message: error is not defined
+Stack: ReferenceError: error is not defined
+    at ArticleService.createArticle (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/articleService.js:16:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async handleArticleRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/articles.js:25:44)
+    at async Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:59:13)

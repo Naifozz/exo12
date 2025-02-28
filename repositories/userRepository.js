@@ -9,7 +9,7 @@ export class UserRepository {
         const db = await openDb();
         return await db.all("SELECT * FROM users");
     }
-    static async createUseruser(userData) {
+    static async createUser(userData) {
         const db = await openDb();
         const { name, email } = userData;
         await db.run("INSERT INTO users (name, email) VALUES (?, ?)", [name, email]);
@@ -33,5 +33,10 @@ export class UserRepository {
         const user = await db.get("SELECT * FROM users WHERE id = ?", [id]);
         const userArticles = { user, userArticle };
         return userArticles;
+    }
+    static async existingUser(email) {
+        const db = await openDb();
+        const user = await db.get("SELECT * FROM users WHERE email = ?", [email]);
+        return user;
     }
 }

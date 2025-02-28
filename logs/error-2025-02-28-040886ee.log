@@ -1,0 +1,4 @@
+=== ERROR LOG [040886ee] ===
+Timestamp: 2025-02-28T10:29:52.960Z
+Message: SQLITE_CONSTRAINT: UNIQUE constraint failed: users.email
+Stack: Error: SQLITE_CONSTRAINT: UNIQUE constraint failed: users.email

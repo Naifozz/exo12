@@ -1,0 +1,8 @@
+=== ERROR LOG [13d07598] ===
+Timestamp: 2025-02-28T09:13:44.363Z
+Message: res is not defined
+Stack: ReferenceError: res is not defined
+    at ArticleService.createArticle (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/articleService.js:17:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async handleArticleRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/articles.js:25:44)
+    at async Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:59:13)

@@ -11,6 +11,7 @@ export async function handleUsersRequest(req, res) {
             } else if (req.url.match(/^\/users\/\d+\/articles(\?.*)?$/)) {
                 const id = req.url.split("/")[2];
                 const userArticles = await UserService.getUserArticles(id);
+
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(userArticles));
             } else if (req.url.startsWith("/users/")) {
@@ -27,18 +28,23 @@ export async function handleUsersRequest(req, res) {
             if (req.url === "/users") {
                 try {
                     const userData = req.body;
-                    const createdUser = await UserService.createUser(userData);
-                    res.writeHead(201, { "Content-Type": "application/json" });
-                    res.end(
-                        JSON.stringify({
-                            message: "User created successfully",
-                            user: createdUser,
-                        })
-                    );
+                    const result = await UserService.createUser(userData);
+                    if (!result.success) {
+                        res.writeHead(400, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ error: result.error }));
+                    } else {
+                        res.writeHead(201, { "Content-Type": "application/json" });
+                        res.end(
+                            JSON.stringify({
+                                message: "User created successfully",
+                                user: result.data,
+                            })
+                        );
+                    }
                 } catch (error) {
                     await logError(error);
                     res.writeHead(500, { "Content-Type": "application/json" });
-                    res.end(JSON.stringify({ error: "Erreur lors du POST" }));
+                    res.end(JSON.stringify({ error: error }));
                 }
             } else {
                 res.writeHead(405);
@@ -50,14 +56,19 @@ export async function handleUsersRequest(req, res) {
                 try {
                     const id = req.url.split("/")[2];
                     const userData = req.body;
-                    const modifiedUser = await UserService.updateUser(id, userData);
-                    res.writeHead(200, { "Content-Type": "application/json" });
-                    res.end(
-                        JSON.stringify({
-                            message: "User updated successfully",
-                            user: modifiedUser,
-                        })
-                    );
+                    const result = await UserService.updateUser(id, userData);
+                    if (!result.success) {
+                        res.writeHead(400, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ error: result.error }));
+                    } else {
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(
+                            JSON.stringify({
+                                message: "User updated successfully",
+                                user: result.data,
+                            })
+                        );
+                    }
                 } catch (error) {
                     await logError(error);
                     res.writeHead(500, { "Content-Type": "application/json" });

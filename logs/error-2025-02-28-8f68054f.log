@@ -1,0 +1,9 @@
+=== ERROR LOG [8f68054f] ===
+Timestamp: 2025-02-28T10:26:32.728Z
+Message: db is not defined
+Stack: ReferenceError: db is not defined
+    at Validator.userValidation (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/utils/validator.js:27:30)
+    at UserService.createUser (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/services/userService.js:14:44)
+    at handleUsersRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/users.js:31:54)
+    at Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:61:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

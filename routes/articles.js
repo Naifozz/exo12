@@ -22,14 +22,19 @@ export async function handleArticleRequest(req, res) {
             if (req.url === "/articles") {
                 try {
                     const articleData = req.body;
-                    const createdArticle = await ArticleService.createArticle(articleData);
-                    res.writeHead(201, { "Content-Type": "application/json" });
-                    res.end(
-                        JSON.stringify({
-                            message: "Article created successfully",
-                            article: createdArticle,
-                        })
-                    );
+                    const result = await ArticleService.createArticle(articleData);
+                    if (!result.success) {
+                        res.writeHead(400, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ error: result.error }));
+                    } else {
+                        res.writeHead(201, { "Content-Type": "application/json" });
+                        res.end(
+                            JSON.stringify({
+                                message: "Article created successfully",
+                                article: result.data,
+                            })
+                        );
+                    }
                 } catch (error) {
                     await logError(error);
                     res.writeHead(500, { "Content-Type": "application/json" });
@@ -45,14 +50,19 @@ export async function handleArticleRequest(req, res) {
                 try {
                     const id = req.url.split("/")[2];
                     const articleData = req.body;
-                    const modifiedArticle = await ArticleService.updateArticle(id, articleData);
-                    res.writeHead(200, { "Content-Type": "application/json" });
-                    res.end(
-                        JSON.stringify({
-                            message: "Article updated successfully",
-                            article: modifiedArticle,
-                        })
-                    );
+                    const result = await ArticleService.updateArticle(id, articleData);
+                    if (!result.success) {
+                        res.writeHead(400, { "Content-Type": "application/json" });
+                        res.end(JSON.stringify({ error: result.error }));
+                    } else {
+                        res.writeHead(200, { "Content-Type": "application/json" });
+                        res.end(
+                            JSON.stringify({
+                                message: "Article updated successfully",
+                                article: result.data,
+                            })
+                        );
+                    }
                 } catch (error) {
                     await logError(error);
                     res.writeHead(500, { "Content-Type": "application/json" });
