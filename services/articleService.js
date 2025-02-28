@@ -5,7 +5,7 @@ export class ArticleService {
         const article = await ArticleRepository.findById(id);
         return article;
     }
-    static async getAllArticles() {
+    static async getAll() {
         const articles = await ArticleRepository.getArticles();
         return articles;
     }

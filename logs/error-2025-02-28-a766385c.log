@@ -1,0 +1,11 @@
+=== ERROR LOG [a766385c] ===
+Timestamp: 2025-02-28T07:58:26.806Z
+Message: UserService.getAllUsers is not a function
+Stack: TypeError: UserService.getAllUsers is not a function
+    at handleUsersRequest (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/routes/users.js:8:49)
+    at Server.<anonymous> (file:///C:/Users/DWWM/Desktop/code/Back/node/exo12/server.js:61:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+
+=== REQUEST INFO ===
+Method: GET
+URL: /users

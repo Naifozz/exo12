@@ -5,7 +5,7 @@ export class ArticleRepository {
         const db = await openDb();
         return await db.get("SELECT * FROM articles WHERE id = ?", [id]);
     }
-    static async getArticles() {
+    static async getAll() {
         const db = await openDb();
         return await db.all("SELECT * FROM articles");
     }
