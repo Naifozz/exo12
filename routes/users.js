@@ -1,24 +1,31 @@
 import { logError } from "../utils/logger.js";
-import { UserService } from "../services/userService.js";
+import {
+    getUser,
+    getAllUsersService,
+    createUserService,
+    updateUserService,
+    deleteUserService,
+    getUserArticlesService,
+} from "../services/userService.js";
 
 export async function handleUsersRequest(req, res) {
-    const userService = new UserService();
-
     switch (req.method) {
         case "GET":
             if (req.url === "/users") {
-                const users = await userService.getAllUsers();
+                // Récupérer tous les utilisateurs
+                const users = await getAllUsersService();
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(users));
             } else if (req.url.match(/^\/users\/\d+\/articles(\?.*)?$/)) {
+                // Récupérer les articles d'un utilisateur
                 const id = req.url.split("/")[2];
-                const userArticles = await userService.getUserArticles(id);
-
+                const userArticles = await getUserArticlesService(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(userArticles));
             } else if (req.url.startsWith("/users/")) {
+                // Récupérer un utilisateur par son ID
                 const id = req.url.split("/")[2];
-                const user = await userService.getUser(id);
+                const user = await getUser(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(user));
             } else {
@@ -29,8 +36,9 @@ export async function handleUsersRequest(req, res) {
         case "POST":
             if (req.url === "/users") {
                 try {
+                    // Créer un nouvel utilisateur
                     const userData = req.body;
-                    const result = await userService.createUser(userData);
+                    const result = await createUserService(userData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -56,9 +64,10 @@ export async function handleUsersRequest(req, res) {
         case "PUT":
             if (req.url.startsWith("/users/")) {
                 try {
+                    // Mettre à jour un utilisateur
                     const id = req.url.split("/")[2];
                     const userData = req.body;
-                    const result = await userService.updateUser(id, userData);
+                    const result = await updateUserService(id, userData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -83,13 +92,14 @@ export async function handleUsersRequest(req, res) {
             break;
         case "DELETE":
             if (req.url.startsWith("/users/")) {
+                // Supprimer un utilisateur
                 const id = req.url.split("/")[2];
-                const deletedUser = await userService.deleteUser(id);
+                const result = await deleteUserService(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(
                     JSON.stringify({
                         message: "User deleted successfully",
-                        user: deletedUser,
+                        data: result,
                     })
                 );
             } else {

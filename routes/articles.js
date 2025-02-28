@@ -1,18 +1,24 @@
 import { logError } from "../utils/logger.js";
-import { ArticleService } from "../services/articleService.js";
+import {
+    getArticle,
+    getAll,
+    createArticleService,
+    updateArticleService,
+    deleteArticleService,
+} from "../services/articleService.js";
 
 export async function handleArticleRequest(req, res) {
-    const articleService = new ArticleService();
-
     switch (req.method) {
         case "GET":
             if (req.url === "/articles") {
-                const articles = await articleService.getAll();
+                // Récupérer tous les articles
+                const articles = await getAll();
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(articles));
             } else if (req.url.startsWith("/articles/")) {
+                // Récupérer un article par son ID
                 const id = req.url.split("/")[2];
-                const article = await articleService.getArticle(id);
+                const article = await getArticle(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(JSON.stringify(article));
             } else {
@@ -23,8 +29,9 @@ export async function handleArticleRequest(req, res) {
         case "POST":
             if (req.url === "/articles") {
                 try {
+                    // Créer un nouvel article
                     const articleData = req.body;
-                    const result = await articleService.createArticle(articleData);
+                    const result = await createArticleService(articleData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -50,9 +57,10 @@ export async function handleArticleRequest(req, res) {
         case "PUT":
             if (req.url.startsWith("/articles/")) {
                 try {
+                    // Mettre à jour un article
                     const id = req.url.split("/")[2];
                     const articleData = req.body;
-                    const result = await articleService.updateArticle(id, articleData);
+                    const result = await updateArticleService(id, articleData);
                     if (!result.success) {
                         res.writeHead(400, { "Content-Type": "application/json" });
                         res.end(JSON.stringify({ error: result.error }));
@@ -77,13 +85,14 @@ export async function handleArticleRequest(req, res) {
             break;
         case "DELETE":
             if (req.url.startsWith("/articles/")) {
+                // Supprimer un article
                 const id = req.url.split("/")[2];
-                const deletedArticle = await articleService.deleteArticle(id);
+                const result = await deleteArticleService(id);
                 res.writeHead(200, { "Content-Type": "application/json" });
                 res.end(
                     JSON.stringify({
                         message: "Article deleted successfully",
-                        article: deletedArticle,
+                        data: result,
                     })
                 );
             } else {

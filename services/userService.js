@@ -1,55 +1,61 @@
-import { UserRepository } from "../repositories/userRepository.js";
-import { Validator } from "../utils/validator.js";
+import {
+    findUserById,
+    getAllUsers,
+    createUser,
+    updateUser,
+    deleteUser,
+    getUserArticles,
+} from "../repositories/userRepository.js";
+import { userValidation } from "../utils/validator.js";
 
-export class UserService {
-    constructor() {
-        this.userRepository = new UserRepository();
-        this.validator = new Validator();
-    }
+// Fonction pour récupérer un utilisateur par son ID
+export async function getUser(id) {
+    const user = await findUserById(id);
+    return user;
+}
 
-    async getUser(id) {
-        const user = await this.userRepository.findById(id);
-        return user;
-    }
+// Fonction pour récupérer tous les utilisateurs
+export async function getAllUsersService() {
+    const users = await getAllUsers();
+    return users;
+}
 
-    async getAllUsers() {
-        const users = await this.userRepository.getAll();
-        return users;
+// Fonction pour créer un utilisateur
+export async function createUserService(userData) {
+    const validation = await userValidation(userData);
+    if (validation !== null) {
+        return {
+            success: false,
+            error: validation,
+        };
+    } else {
+        const user = await createUser(userData);
+        return { success: true, data: user };
     }
+}
 
-    async createUser(userData) {
-        const validation = await this.validator.userValidation(userData);
-        if (validation !== null) {
-            return {
-                success: false,
-                error: validation,
-            };
-        } else {
-            const user = await this.userRepository.createUser(userData);
-            return { success: true, data: user };
-        }
+// Fonction pour mettre à jour un utilisateur
+export async function updateUserService(id, userData) {
+    const validation = await userValidation(userData);
+    if (validation !== null) {
+        return {
+            success: false,
+            error: validation,
+        };
+    } else {
+        const user = await updateUser(id, userData);
+        return { success: true, data: user };
     }
+}
 
-    async updateUser(id, userData) {
-        const validation = await this.validator.userValidation(userData);
-        if (validation !== null) {
-            return {
-                success: false,
-                error: validation,
-            };
-        } else {
-            const user = await this.userRepository.updateUser(id, userData);
-            return { success: true, data: user };
-        }
-    }
+// Fonction pour supprimer un utilisateur
+export async function deleteUserService(id) {
+    await deleteUser(id);
+    return { success: true, message: "User deleted successfully" };
+}
 
-    async deleteUser(id) {
-        const user = await this.userRepository.deleteUser(id);
-        return user;
-    }
-
-    async getUserArticles(id) {
-        const userArticles = await this.userRepository.getUserArticles(id);
-        return userArticles;
-    }
+// Fonction pour récupérer les articles d'un utilisateur
+export async function getUserArticlesService(id) {
+    const userArticles = await getUserArticles(id);
+    return userArticles;
 }

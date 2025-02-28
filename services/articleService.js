@@ -1,50 +1,54 @@
-import { ArticleRepository } from "../repositories/articleRepository.js";
-import { Validator } from "../utils/validator.js";
+import {
+    findArticleById,
+    getAllArticles,
+    createArticle,
+    updateArticle,
+    deleteArticle,
+} from "../repositories/articleRepository.js";
+import { articleValidation } from "../utils/validator.js";
 
-export class ArticleService {
-    constructor() {
-        this.articleRepository = new ArticleRepository();
-        this.validator = new Validator();
-    }
+// Fonction pour récupérer un article par son ID
+export async function getArticle(id) {
+    const article = await findArticleById(id);
+    return article;
+}
 
-    async getArticle(id) {
-        const article = await this.articleRepository.findById(id);
-        return article;
-    }
+// Fonction pour récupérer tous les articles
+export async function getAll() {
+    const articles = await getAllArticles();
+    return articles;
+}
 
-    async getAll() {
-        const articles = await this.articleRepository.getArticles();
-        return articles;
+// Fonction pour créer un article
+export async function createArticleService(articleData) {
+    const validation = await articleValidation(articleData);
+    if (validation !== null) {
+        return {
+            success: false,
+            error: validation,
+        };
+    } else {
+        const article = await createArticle(articleData);
+        return { success: true, data: article };
     }
+}
 
-    async createArticle(articleData) {
-        const validation = await this.validator.articleValidation(articleData);
-        if (validation !== null) {
-            return {
-                success: false,
-                error: validation,
-            };
-        } else {
-            const article = await this.articleRepository.createArticle(articleData);
-            return { success: true, data: article };
-        }
+// Fonction pour mettre à jour un article
+export async function updateArticleService(id, articleData) {
+    const validation = await articleValidation(articleData);
+    if (validation !== null) {
+        return {
+            success: false,
+            error: validation,
+        };
+    } else {
+        const article = await updateArticle(id, articleData);
+        return { success: true, data: article };
     }
+}
 
-    async updateArticle(id, articleData) {
-        const validation = await this.validator.articleValidation(articleData);
-        if (validation !== null) {
-            return {
-                success: false,
-                error: validation,
-            };
-        } else {
-            const article = await this.articleRepository.updateArticle(id, articleData);
-            return { success: true, data: article };
-        }
-    }
-
-    async deleteArticle(id) {
-        const article = await this.articleRepository.deleteArticle(id);
-        return article;
-    }
+// Fonction pour supprimer un article
+export async function deleteArticleService(id) {
+    await deleteArticle(id);
+    return { success: true, message: "Article deleted successfully" };
 }
